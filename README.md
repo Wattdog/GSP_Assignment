@@ -3,6 +3,7 @@
 * Unity 3D
 * Shooter Platformer
 * Theme: Industrial Revolution Steampunk Wasteland
+* 1st person
 
 # Creators of this game
 * Theo Butler
