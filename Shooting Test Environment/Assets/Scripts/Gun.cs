@@ -20,7 +20,7 @@ public class Gun : MonoBehaviour
     void Start()
     {
         totalAmmo = ammo * 4;
-        ammoInMag = ammo;
+        ammoInMag = 0;
         ammoCounter.text = ammo + " / " + totalAmmo;
     }
 
@@ -39,17 +39,7 @@ public class Gun : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
-                Debug.Log("Reload");
-                if (totalAmmo > 30)
-                {
-                    ammo = 30;
-                }
-                else
-                {
-                    ammo -= ammoInMag;
-                }
-                totalAmmo -= ammoInMag;
-                ammoInMag = 30;
+                reload(ammoInMag);
             }
         }
     }
@@ -60,8 +50,9 @@ public class Gun : MonoBehaviour
         bool checkHit = Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range); 
         if (checkHit == true)
         {
+            Debug.DrawLine(fpsCam.transform.position, fpsCam.transform.position + fpsCam.transform.forward);
             ammo -= 1;
-            ammoInMag -= 1;
+            ammoInMag++;
             Debug.Log(ammoInMag);
             ammoCounter.text = ammo + " / " + totalAmmo;
             GameObject bul = Instantiate(bullet, hit.point, Quaternion.identity);
@@ -69,12 +60,29 @@ public class Gun : MonoBehaviour
         }
         else
         {
+            Debug.DrawLine(fpsCam.transform.position, Vector3.zero);
             ammo -= 1;
-            ammoInMag -= 1;
+            ammoInMag++;
             Debug.Log(ammoInMag);
             ammoCounter.text = ammo + " / " + totalAmmo;
             GameObject bul = Instantiate(bullet, hit.point, Quaternion.identity);
             Destroy(bul, 2);
+        }
+    }
+
+    void reload(int ammoUsed)
+    {
+        if (totalAmmo >= ammo)
+        {
+            ammo = 30;
+            totalAmmo = totalAmmo - ammoInMag;
+            ammoInMag = 0;
+        }
+        else
+        {
+            ammo = 30;
+            totalAmmo = 0;
+            ammoInMag = 0;
         }
     }
 }

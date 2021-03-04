@@ -19,7 +19,7 @@ public class shotgun : MonoBehaviour
     void Start()
     {
         totalAmmo = ammo * 4;
-        ammoInMag = ammo;
+        ammoInMag = 0;
         ammoCounter.text = ammo + " / " + totalAmmo;
     }
 
@@ -38,22 +38,7 @@ public class shotgun : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
-                Debug.Log("Reload");
-                if (totalAmmo >= 8)
-                {
-                    ammo = 8;
-                }
-                else
-                {
-                    ammo -= ammoInMag;
-                }
-
-                if (ammoInMag == 0)
-                {
-                    totalAmmo -= 8;
-                }
-                totalAmmo -= ammoInMag;
-                ammoInMag = 8;
+                reload(ammoInMag);
             }
         }
     }
@@ -102,8 +87,24 @@ public class shotgun : MonoBehaviour
         }
 
         ammo -= 1;
-        ammoInMag -= 1;
+        ammoInMag++;
         Debug.Log(ammoInMag);
         ammoCounter.text = ammo + " / " + totalAmmo;
+    }
+
+    void reload(int ammoUsed)
+    {
+        if (totalAmmo >= ammo)
+        {
+            ammo = 8;
+            totalAmmo = totalAmmo - ammoInMag;
+            ammoInMag = 0;
+        }
+        else
+        {
+            ammo = 8;
+            totalAmmo = 0;
+            ammoInMag = 0;
+        }
     }
 }
