@@ -106,8 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 005db74f1702bb74f9babba682cc45f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
-  range: 20
+  shotGun: {fileID: 11400000, guid: 897f3e04850804c45b300ca4d166cf2b, type: 2}
   ammo: 8
   totalAmmo: 0
   fpsCam: {fileID: 0}
