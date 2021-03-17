@@ -108,7 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gun: {fileID: 11400000, guid: 0e2e181e02ce9384c9f2321729abd017, type: 2}
   ammo: 30
-  totalAmmo: 0
   fpsCam: {fileID: 0}
   bullet: {fileID: 7628602671495459376, guid: 96c2d841a1b551e4da91822db9dc329e, type: 3}
   ammoCounter: {fileID: 0}
+  slider: {fileID: 0}

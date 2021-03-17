@@ -5,9 +5,8 @@ using UnityEngine.UI;
 
 public class shotgun : MonoBehaviour
 {
-    public float damage = 5f;
-    public float range = 20f;
-    public int ammo = 8;
+    [SerializeField] private GunData shotGun;
+    public int ammo = 0;
     public int totalAmmo;
 
     public Camera fpsCam;
@@ -51,7 +50,7 @@ public class shotgun : MonoBehaviour
         RaycastHit hit_3;
 
         // Bullet that goes forward
-        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
+        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, shotGun.range))
         {
             GameObject bul = Instantiate(bullet, hit.point, Quaternion.LookRotation(hit.normal));
             Destroy(bul, 2);
@@ -60,7 +59,7 @@ public class shotgun : MonoBehaviour
         }
 
         // Bullet that goes forward
-        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward + new Vector3(-2f, 0f, 0f), out hit_1, range))
+        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward + new Vector3(-2f, 0f, 0f), out hit_1, shotGun.range))
         {
             GameObject bul = Instantiate(bullet, hit_1.point, Quaternion.LookRotation(hit_1.normal));
             Destroy(bul, 2);
@@ -69,7 +68,7 @@ public class shotgun : MonoBehaviour
         }
 
         // Bullet that goes up
-        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward + new Vector3(0f, 0.1f, 0f), out hit_2, range))
+        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward + new Vector3(0f, 0.1f, 0f), out hit_2, shotGun.range))
         {
             GameObject bul = Instantiate(bullet, hit_2.point, Quaternion.LookRotation(hit_2.normal));
             Destroy(bul, 2);
@@ -78,7 +77,7 @@ public class shotgun : MonoBehaviour
         }
 
         // Bullet that goes down
-        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward + new Vector3(0f, -0.1f, 0f), out hit_3, range))
+        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward + new Vector3(0f, -0.1f, 0f), out hit_3, shotGun.range))
         {
             GameObject bul = Instantiate(bullet, hit_3.point, Quaternion.LookRotation(hit_3.normal));
             Destroy(bul, 2);
@@ -103,7 +102,11 @@ public class shotgun : MonoBehaviour
         else
         {
             ammo = 8;
-            totalAmmo = 0;
+            int temp = totalAmmo - ammoInMag;
+            if (temp > 0)
+                totalAmmo = totalAmmo - ammoInMag;
+            else
+                totalAmmo = 0;
             ammoInMag = 0;
         }
     }

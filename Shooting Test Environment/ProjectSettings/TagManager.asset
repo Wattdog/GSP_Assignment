@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Gun
   - Shotgun
+  - Bullet
+  - Enemy
   layers:
   - Default
   - TransparentFX

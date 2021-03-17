@@ -6,10 +6,9 @@ using UnityEngine.UI;
 
 public class Gun : MonoBehaviour
 {
-    public float damage = 10f;
-    public float range = 100f;
-    public int ammo = 30;
-    public int totalAmmo;
+    [SerializeField] private GunData gun;
+    public int ammo = 0;
+    private int totalAmmo;
 
     public Camera fpsCam;
     public GameObject bullet;
@@ -47,27 +46,24 @@ public class Gun : MonoBehaviour
     void Shoot()
     {
         RaycastHit hit;
-        bool checkHit = Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range); 
+        bool checkHit = Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, gun.range); 
         if (checkHit == true)
         {
             Debug.DrawLine(fpsCam.transform.position, fpsCam.transform.position + fpsCam.transform.forward);
-            ammo -= 1;
-            ammoInMag++;
-            Debug.Log(ammoInMag);
-            ammoCounter.text = ammo + " / " + totalAmmo;
             GameObject bul = Instantiate(bullet, hit.point, Quaternion.identity);
             Destroy(bul, 2);
         }
         else
         {
             Debug.DrawLine(fpsCam.transform.position, Vector3.zero);
-            ammo -= 1;
-            ammoInMag++;
-            Debug.Log(ammoInMag);
-            ammoCounter.text = ammo + " / " + totalAmmo;
             GameObject bul = Instantiate(bullet, hit.point, Quaternion.identity);
             Destroy(bul, 2);
         }
+
+        ammo -= 1;
+        ammoInMag++;
+        Debug.Log(ammoInMag);
+        ammoCounter.text = ammo + " / " + totalAmmo;
     }
 
     void reload(int ammoUsed)
@@ -81,7 +77,11 @@ public class Gun : MonoBehaviour
         else
         {
             ammo = 30;
-            totalAmmo = 0;
+            int temp = totalAmmo - ammoInMag;
+            if (temp > 0)
+                totalAmmo = totalAmmo - ammoInMag;
+            else
+                totalAmmo = 0;
             ammoInMag = 0;
         }
     }
