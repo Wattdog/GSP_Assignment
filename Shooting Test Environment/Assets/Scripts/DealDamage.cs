@@ -7,14 +7,12 @@ public class DealDamage : MonoBehaviour
     [SerializeField] private GunData[] gunData;
 
     private GameObject player;
-    private GameObject bullet;
     private SwitchGuns currentGun;
     private int weapon;
 
     void Start()
     {
         player = GameObject.Find("Player");
-        bullet = GameObject.FindGameObjectWithTag("Bullet");
         currentGun = player.GetComponent<SwitchGuns>();
     }
 
@@ -27,8 +25,7 @@ public class DealDamage : MonoBehaviour
     {
         if (col.gameObject.tag == "Enemy")
         {
-            col.gameObject.GetComponent<Enemy>().health -= gunData[weapon].damage;
-            Destroy(bullet);
+            col.gameObject.GetComponent<EnemyHealth>().health -= gunData[weapon].damage;
         }
     }
 }

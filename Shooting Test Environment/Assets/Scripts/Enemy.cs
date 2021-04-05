@@ -1,52 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-    public float health;
-    public float maxHealth;
     public float speed;
-    public int distance;
-
-    public GameObject healthBarUi;
-    public Slider slider;
-
+    public float distance;
+    
     private GameObject player;
 
+    // Start is called before the first frame update
     void Start()
     {
-        health = maxHealth;
-        slider.value = CalculateHealth();
         player = GameObject.Find("Player");
     }
 
+    // Update is called once per frame
     void Update()
     {
-        // Calculates current health
-        slider.value = CalculateHealth();
-
-        if (health < maxHealth)
-        {
-            // Health bar will become visble once the health is less than the max health
-            healthBarUi.SetActive(true);
-        }
-
-        if (health <= 0)
-        {
-            // Destroys the enemy once its health reaches 0
-            Destroy(gameObject);
-        }
-
-        if (health > maxHealth)
-        {
-            // Sets enemys max health
-            health = maxHealth;
-        }
-
         // Checks to see if enemy can see player
-        bool currentDis = InRange();
+        bool currentDis = inRange();
 
         if (currentDis)
         {
@@ -55,13 +28,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    float CalculateHealth()
-    {
-        // Calculates enemies current health
-        return health / maxHealth;
-    }
-
-    bool InRange()
+    bool inRange()
     {
         if (Vector3.Distance(transform.position, player.transform.position) < distance)
         {
