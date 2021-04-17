@@ -7,4 +7,6 @@ public class GunData : ScriptableObject
 {
     public float damage;
     public float range;
+    public float reloadTime;
+    public float shotDelay;
 }

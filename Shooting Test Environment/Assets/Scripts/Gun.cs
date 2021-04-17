@@ -74,7 +74,7 @@ public class Gun : MonoBehaviour
             totalAmmo = totalAmmo - ammoInMag;
             ammoInMag = 0;
         }
-        else
+        else if (totalAmmo <= ammo)
         {
             ammo = 30;
             int temp = totalAmmo - ammoInMag;

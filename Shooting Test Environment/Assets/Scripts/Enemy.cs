@@ -1,18 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 public class Enemy : MonoBehaviour
 {
-    public float speed;
-    public float distance;
+    [SerializeField] private EnemyData basic_Enemy;
+	public float delay = 3f;
     
     private GameObject player;
-
+	private float countdown;
+    
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player");
+        countdown = delay;
     }
 
     // Update is called once per frame
@@ -24,13 +28,20 @@ public class Enemy : MonoBehaviour
         if (currentDis)
         {
             // Will follow the player if currentDis returns true
-            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, basic_Enemy.speed * Time.deltaTime);
+            countdown -= Time.deltaTime;
+            Debug.Log(countdown);
+            if (countdown <= 0)
+            {
+                countdown = playerHit();
+                player.GetComponent<PlayerHealth>().health -= basic_Enemy.damage;
+            }
         }
     }
 
     bool inRange()
     {
-        if (Vector3.Distance(transform.position, player.transform.position) < distance)
+        if (Vector3.Distance(transform.position, player.transform.position) < basic_Enemy.distance)
         {
             // Will return true if the distance between the player and enemy is 
             // less than the set distance
@@ -42,5 +53,10 @@ public class Enemy : MonoBehaviour
             // greater than the set distance
             return false;
         }
+    }
+
+    float playerHit()
+    {
+        return delay;
     }
 }
